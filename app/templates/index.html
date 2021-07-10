@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+ 
+
+{% block title %}
+    Flights
+{% endblock %}
+
+ 
+
+{% block bodyTitle %}
+    <h1>WELCOME TO CNTT ĐỊA HỌC AIRLINE</h1>
+{% endblock %}
+{% block body %}
+    {% with messages = get_flashed_messages() %}
+      <h2> {{messages[0]}} </h2>
+    {% endwith %}
+{% endblock %}
