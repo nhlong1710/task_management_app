@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Create new meeting
+{% endblock %}
+
+{% block body %}
+    <h1>Create new meeting</h1>
+
+    <form action="" method="post">
+      {{ form.hidden_tag() }}
+      <p>
+          {{ form.meetingName.label }}<br>
+          {{ form.meetingName }}<br>
+          {% for error in form.meetingName.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p>
+          {{ form.meetingDescription.label }}<br>
+          {{ form.meetingDescription }}<br>
+          {% for error in form.meetingDescription.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p>
+          {{ form.meetingDate.label }}<br>
+          {{ form.meetingDate }}<br>
+          {% for error in form.meetingDate.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p>
+          {{ form.meetingStart.label }}<br>
+          {{ form.meetingStart }}<br>
+          {% for error in form.meetingStart.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p>
+          {{ form.meetingEnd.label }}<br>
+          {{ form.meetingEnd }}<br>
+          {% for error in form.meetingEnd.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p>{{ form.submit() }}</p>
+
+    </form>
+{% endblock %}

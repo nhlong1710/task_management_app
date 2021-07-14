@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Update meeting information
+{% endblock %}
+
+{% block body %}
+    <h1>Update meeting information</h1>
+
+    <form action="" method="post">
+      {{ form.hidden_tag() }}
+      <p>
+          {{ form.meetingName.label }}<br>
+          {{ form.meetingName(value=meeting.meeting_name) }}<br>
+          {% for error in form.meetingName.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p>
+          {{ form.meetingDescription.label }}<br>
+          {{ form.meetingDescription(value=meeting.meeting_description)  }}<br>
+          {% for error in form.meetingDescription.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p>
+          {{ form.meetingNote.label }}<br>
+          {{ form.meetingNote(value=meeting.meeting_note) }}<br>
+          {% for error in form.meetingNote.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p>
+          {{ form.meetingDate.label }}<br>
+          {{ form.meetingDate(value=meeting.meeting_date) }}<br>
+          {% for error in form.meetingDate.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p>
+          {{ form.meetingStart.label }}<br>
+          {{ form.meetingStart(value=meeting.meeting_start) }}<br>
+          {% for error in form.meetingStart.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p>
+          {{ form.meetingEnd.label }}<br>
+          {{ form.meetingEnd(value=meeting.meeting_end) }}<br>
+          {% for error in form.meetingEnd.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p>{{ form.submit() }}</p>
+
+    </form>
+{% endblock %}

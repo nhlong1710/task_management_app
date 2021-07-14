@@ -2,21 +2,100 @@
 <html>
 <head>
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}" media="all" />
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='demo.css') }}" media="all" />
+      <!-- jQuery lib from google server ===================== -->
+    <script src="{{ url_for('static', filename='js/jquery-1.7.2.min.js') }}"></script>
+    <!--  javaScript -->
+    <script>
+    <!--  // building select nav for mobile width only -->
+    $(function(){
+      // building select menu
+      $('<select />').appendTo('nav');
+
+      // building an option for select menu
+      $('<option />', {
+        'selected': 'selected',
+        'value' : '',
+        'text': 'Choise Page...'
+      }).appendTo('nav select');
+
+      $('nav ul li a').each(function(){
+        var target = $(this);
+
+        $('<option />', {
+          'value' : target.attr('href'),
+          'text': target.text()
+        }).appendTo('nav select');
+
+      });
+
+      // on clicking on link
+      $('nav select').on('change',function(){
+        window.location = $(this).find('option:selected').val();
+      });
+    });
+
+    // show and hide sub menu
+    $(function(){
+      $('nav ul li').hover(
+        function () {
+          //show its submenu
+          $('ul', this).slideDown(150);
+        },
+        function () {
+          //hide its submenu
+          $('ul', this).slideUp(150);
+        }
+      );
+    });
+    //end
+    </script>
+    <!-- end -->`
 </head>
 <body>
+  <header>
+		<div id="fdw">
+				<!--nav-->
+					<nav>
+						<ul>
+
+							<li class="current"><a href="{{ url_for('main.index') }}">home</a></li>
+              {% if not current_user.is_authenticated %}
+                <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                <li><a href="{{ url_for('auth.wtf_signUp_s1') }}">Sign up</a></li>
+              {% endif %}
+							<li><a href="">Meeting<span class="arrow"></span></a>
+								<ul style="display: none;" class="sub_menu">
+									<li class="arrow_top"></li>
+									<li><a href="{{ url_for('meeting.create_meeting') }}">Create new meeting</a></li>
+									<li><a href="{{ url_for('meeting.view_all_meetings') }}">View all meeting</a></li>
+								</ul>
+							</li>
+
+							<li>
+								<a href="">Jobs<span class="arrow"></span></a>
+								<ul style="display: none;" class="sub_menu">
+									<li class="arrow_top"></li>
+									<li><a href="">View all uncompleted task</a></li>
+								</ul>
+							</li>
+
+              {% if current_user.is_authenticated %}
+            		<span class = "current_user"> Hi {{current_user.fullname}}! </span>
+            		<li class = "current_user"><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                <li class = "current_user"><a href="{{ url_for('auth.view_profile') }}">Profile</a></li>
+            	{% endif %}
+
+						</ul>
+					</nav>
+		</div><!-- end fdw -->
+	</header><!-- end header -->
+
 	{% block bodyTitle %}
 	{% endblock %}
-	{% if current_user.is_authenticated %}
-		hi{{current_user.fullname}}!
-		<a href="{{ url_for('auth.logout') }}">Login</a>
-	{% endif %}
-  <ul>
-    {% if not current_user.if_authenticated %}
-		<li><a href="{{ url_for('auth.login') }}">Login</a></li>
-    <li><a href="{{ url_for('auth.wtf_signUp_s1') }}">Sign up</a></li>
-		{% endif %}
-  </ul>
   <div class="container">
       {% block body %}
       {% endblock %}

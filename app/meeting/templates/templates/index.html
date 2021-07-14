@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Flights
+{% endblock %}
+
+
+{% block body %}
+    {% with messages = get_flashed_messages() %}
+      <h2> {{messages[0]}} </h2>
+    {% endwith %}
+{% endblock %}

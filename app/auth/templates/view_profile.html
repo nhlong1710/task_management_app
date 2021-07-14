@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit Profile
+{% endblock %}
+
+{% block body %}
+  {{ current_user.staff_id }}<br>
+  {{ current_user.title }}<br>
+  {{ current_user.fullname }}<br>
+  {{ current_user.email }}<br>
+  {{ current_user.last_access }}<br>
+  {{ current_user.created_time }}<br>
+  {{ current_user.updated_time }}<br>
+  <a href="{{ url_for('auth.edit_profile_s1') }}">Edit profile</a>
+{% endblock %}

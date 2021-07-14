@@ -3,6 +3,9 @@ from flask_login import UserMixin
 from app import login
 from werkzeug.security import generate_password_hash,check_password_hash
 from datetime import datetime, timedelta
+import jwt
+from time import time
+from flask import current_app
 
 class User(UserMixin, db.Model):
     __tablename__ = "user"
@@ -12,7 +15,9 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String)
     title = db.Column(db.String)
-    created_time = db.Column(db.DateTime, default=datetime.utcnow)
+    created_time = db.Column(db.DateTime, default=datetime.now)
+    updated_time = db.Column(db.DateTime)
+    last_access = db.Column(db.DateTime)
 
     def set_password(self, passwordInput):
         self.password = generate_password_hash(passwordInput)
@@ -20,17 +25,36 @@ class User(UserMixin, db.Model):
     def check_password(self, passwordInput):
         return check_password_hash(self.password, passwordInput)
 
+    def record_last_access(self):
+        self.last_access = datetime.now()
+        db.session.commit()
+
+    def get_meeting_confirmation_token(self, expires_in=10000):
+        return jwt.encode(
+            {'meeting_confirm': self.id, 'exp': time() + expires_in},
+            current_app.config['SECRET_KEY'], algorithm='HS256')
+
+    @staticmethod
+    def verify_meeting_confirmation_token(token):
+        try:
+            id = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=['HS256'])['meeting_confirm']
+        except:
+            return
+        return User.query.get(id)
+
 class Meeting(db.Model):
     __tablename__ = "meeting"
     id = db.Column(db.Integer, primary_key=True)
     meeting_name = db.Column(db.String)
-    meeting_desription = db.Column(db.String)
+    meeting_description = db.Column(db.String)
     meeting_date = db.Column(db.Date)
-    meeting_start = db.Column(db.Float)
-    meeting_end = db.Column(db.Float)
-    created_time = db.Column(db.DateTime, default=datetime.utcnow)
-    update_time = db.Column(db.DateTime)
-    note = db.Column(db.String)
+    meeting_start = db.Column(db.Time)
+    meeting_end = db.Column(db.Time)
+    created_time = db.Column(db.DateTime, default=datetime.now)
+    updated_time = db.Column(db.DateTime)
+    meeting_note = db.Column(db.String)
+    number_of_attendants = db.Column(db.Integer, default=0)
+    number_of_responses = db.Column(db.Integer, default=0)
 
 class Meeting_user(db.Model):
     __tablename__ = "meeting_user"

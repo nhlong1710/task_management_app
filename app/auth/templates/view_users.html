@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    staffs
+{% endblock %}
+
+{% block body %}
+    <h1>All staffs</h1>
+      <form action="" method="post">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Select</th>
+            <th>Staff ID</th>
+            <th>Title</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Last Access</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for staff in staffs %}
+            {% if ((staff.id % 2)==1) %}
+              <tr class="success">
+                <td> <input type=checkbox name="checkbox" value="{{staff.id}}"></td>
+                <td>{{staff.staff_id}}</td>
+                <td>{{staff.title}}</td>
+                <td>{{staff.fullname}}</td>
+                <td>{{staff.email}}</td>
+                <td>{{staff.last_access}}</td>
+              </tr>
+            {% else %}
+              <tr class="Warning">
+                <td> <input type=checkbox name='checkbox' value="{{staff.id}}"></td>
+                <td>{{staff.staff_id}}</td>
+                <td>{{staff.title}}</td>
+                <td>{{staff.fullname}}</td>
+                <td>{{staff.email}}</td>
+                <td>{{staff.last_access}}</td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div class="form-group">
+          <button class="btn btn-danger">Delete staff</button>
+      </div>
+      </form>
+{% endblock %}

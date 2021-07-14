@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    staffs
+{% endblock %}
+
+{% block body %}
+    <h1>All Meeting</h1>
+      <form action="" method="post">
+      <table class="table" border=2px>
+        <thead>
+          <tr>
+            <th>Select</th>
+            <th>Meeting Name</th>
+            <th>Meeting Descriptions</th>
+            <th>Meeting Date</th>
+            <th>Number of Responses</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for meeting in meetings %}
+            {% if ((meeting.id % 2)==1) %}
+              <tr class="success">
+                <td> <input type=checkbox name="checkbox" value="{{meeting.id}}"></td>
+                <td><a href="{{ url_for('meeting.edit_meeting_details', meetingId = meeting.id) }}">{{meeting.meeting_name}}</a></td>
+                <td>{{meeting.meeting_description}}</td>
+                <td>{{meeting.meeting_date}}</td>
+                <td>{{meeting.number_of_responses}}</td>
+              </tr>
+            {% else %}
+              <tr class="Warning">
+                <td> <input type=checkbox name='checkbox' value="{{meeting.id}}"></td>
+                <td><a href="{{ url_for('meeting.edit_meeting_details', meetingId = meeting.id) }}">{{meeting.meeting_name}}</a></td>
+                <td>{{meeting.meeting_description}}</td>
+                <td>{{meeting.meeting_date}}</td>
+                <td>{{meeting.number_of_responses}}</td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div class="form-group">
+          <button class="btn btn-danger">Delete selected meeting</button>
+      </div>
+      </form>
+{% endblock %}

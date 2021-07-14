@@ -1,0 +1,8 @@
+<h1>Kính gửi thầy/cô {{ user.username }},</h1>
+<p>
+    Kính mời thầy/cô tới dự cuộc họp {{ meeting.meetingName}} vào lúc {{ meeting.meeting_start}} ngày {{ meeting.meeting_date}}
+    De vao xem thong tin va tra loi cuoc hop, thay/co bam vao link sau {{ meetingId }} 1234
+    <a href="{{ url_for('meeting.meeting_confirmation', meetingId = meetingId, token=token, _external=True) }}">
+       click here
+     </a>.
+</p>

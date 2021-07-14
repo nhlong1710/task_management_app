@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Create new meeting
+{% endblock %}
+
+{% block body %}
+    <h1>Confirm attend or not from meeting {{ meeting.meeting_name }}</h1>
+
+    <form action="" method="post">
+      {{ form.hidden_tag() }}
+      <p>
+          {{ form.isAttended.label }}<br>
+          {{ form.isAttended }}<br>
+          {% for error in form.isAttended.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p>{{ form.submit() }}</p>
+
+    </form>
+{% endblock %}
